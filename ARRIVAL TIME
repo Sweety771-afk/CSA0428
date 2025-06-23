@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int NOP, quant, i, sum = 0, wt = 0, tat = 0;
+    printf("Total number of processes: ");
+    scanf("%d", &NOP);
+    int at[NOP], bt[NOP], temp[NOP];
+
+    for (i = 0; i < NOP; i++) {
+        printf("Arrival time of Process[%d]: ", i + 1);
+        scanf("%d", &at[i]);
+        printf("Burst time of Process[%d]: ", i + 1);
+        scanf("%d", &bt[i]);
+        temp[i] = bt[i];
+    }
+
+    printf("Enter Time Quantum: ");
+    scanf("%d", &quant);
+    // Round Robin logic would go here...
+    return 0;
+}
