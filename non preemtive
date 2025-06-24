@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+void calculateTimes(int processes[], int n, int bt[]) {
+    int wt[n], tat[n];
+    wt[0] = 0; // First process has no waiting time
+    for (int i = 1; i < n; i++)
+        wt[i] = bt[i - 1] + wt[i - 1];
+    
+    for (int i = 0; i < n; i++)
+        tat[i] = bt[i] + wt[i];
+
+    printf("Process\tBurst Time\tWaiting Time\tTurnaround Time\n");
+    for (int i = 0; i < n; i++)
+        printf("%d\t%d\t\t%d\t\t%d\n", processes[i], bt[i], wt[i], tat[i]);
+}
+
+int main() {
+    int processes[] = {0, 1, 2};
+    int burst_time[] = {8, 4, 2};
+    int n = sizeof processes / sizeof processes[0];
+    calculateTimes(processes, n, burst_time);
+    return 0;
+}
