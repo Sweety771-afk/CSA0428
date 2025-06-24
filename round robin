@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+void roundRobin(int processes[], int n, int burstTime[], int quantum) {
+    int remainingTime[n], waitingTime[n], t = 0;
+    for (int i = 0; i < n; i++) remainingTime[i] = burstTime[i], waitingTime[i] = 0;
+
+    while (1) {
+        int done = 1;
+        for (int i = 0; i < n; i++) {
+            if (remainingTime[i] > 0) {
+                done = 0;
+                if (remainingTime[i] > quantum) {
+                    t += quantum;
+                    remainingTime[i] -= quantum;
+                } else {
+                    t += remainingTime[i];
+                    waitingTime[i] = t - burstTime[i];
+                    remainingTime[i] = 0;
+                }
+            }
+        }
+        if (done) break;
+    }
+    for (int i = 0; i < n; i++) printf("Process %d waiting time: %d\n", processes[i], waitingTime[i]);
+}
+
+int main() {
+    int processes[] = {0, 1, 2};
+    int burstTime[] = {10, 5, 8};
+    int quantum = 3;
+    roundRobin(processes, 3, burstTime, quantum);
+    return 0;
+}
