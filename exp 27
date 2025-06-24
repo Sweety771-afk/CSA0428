@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char fn[100], pat[100], temp[200];
+    FILE *fp;
+
+    printf("\nEnter file name: ");
+    scanf("%s", fn);
+    printf("Enter the pattern: ");
+    scanf("%s", pat);
+
+    fp = fopen(fn, "r");
+    if (fp == NULL) {
+        perror("Error opening file");
+        return 1; // Return an error code if the file cannot be opened
+    }
+
+    while (fgets(temp, sizeof(temp), fp) != NULL) {
+        // Remove newline character from temp if present
+        temp[strcspn(temp, "\n")] = 0; 
+        if (strcmp(temp, pat) != 0) {
+            printf("%s\n", temp);
+        }
+    }
+
+    fclose(fp);
+    return 0; // Return 0 for successful execution
+}
