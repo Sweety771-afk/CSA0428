@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define FRAME_SIZE 3
+
+void fifo(int pages[], int n) {
+    int frame[FRAME_SIZE] = {-1, -1, -1};
+    int pageFaults = 0, index = 0;
+
+    for (int i = 0; i < n; i++) {
+        int found = 0;
+        for (int j = 0; j < FRAME_SIZE; j++) {
+            if (frame[j] == pages[i]) {
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            frame[index] = pages[i];
+            index = (index + 1) % FRAME_SIZE;
+            pageFaults++;
+        }
+    }
+    printf("Total Page Faults: %d\n", pageFaults);
+}
+
+int main() {
+    int pages[] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3};
+    int n = sizeof(pages) / sizeof(pages[0]);
+    fifo(pages, n);
+    return 0;
+}
