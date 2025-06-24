@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+
+int main() {
+    const char *name = "SharedMemory";
+    const int SIZE = 4096;
+    
+    // Create shared memory object
+    int shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+    ftruncate(shm_fd, SIZE);
+    
+    // Map shared memory
+    char *ptr = mmap(0, SIZE, PROT_WRITE | PROT_READ, MAP_SHARED, shm_fd, 0);
+    
+    // Write to shared memory
+    sprintf(ptr, "Hello from shared memory!");
+    
+    // Read from shared memory
+    printf("%s\n", ptr);
+    
+    // Clean up
+    munmap(ptr, SIZE);
+    shm_unlink(name);
+    
+    return 0;
+}
