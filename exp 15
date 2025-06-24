@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    const char *filename = "example.txt";
+    FILE *file = fopen(filename, "w"); // Attempt to create the file
+
+    if (file) {
+        printf("File created successfully: %s\n", filename);
+        fclose(file); // Don't forget to close the file!
+    } else {
+        perror("Error creating file");
+    }
+
+    return 0;
+}
