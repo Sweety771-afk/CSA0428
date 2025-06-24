@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Block {
+    int data;
+    struct Block* next;
+} Block;
+
+typedef struct File {
+    Block* head;
+    Block* tail;
+} File;
+
+void addBlock(File* file, int data) {
+    Block* newBlock = (Block*)malloc(sizeof(Block));
+    newBlock->data = data;
+    newBlock->next = NULL;
+    if (file->tail) {
+        file->tail->next = newBlock;
+    } else {
+        file->head = newBlock;
+    }
+    file->tail = newBlock;
+}
+
+int main() {
+    File myFile = {NULL, NULL};
+    addBlock(&myFile, 1);
+    addBlock(&myFile, 2);
+    return 0;
+}
