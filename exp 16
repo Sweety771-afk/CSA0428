@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Employee {
+    int id;
+    char name[30];
+};
+
+int main() {
+    FILE *file = fopen("employees.dat", "wb+");
+    struct Employee emp = {1, "John Doe"};
+    fwrite(&emp, sizeof(emp), 1, file);
+    
+    fseek(file, 0, SEEK_SET);
+    struct Employee readEmp;
+    fread(&readEmp, sizeof(readEmp), 1, file);
+    printf("ID: %d, Name: %s\n", readEmp.id, readEmp.name);
+    
+    fclose(file);
+    return 0;
+}
