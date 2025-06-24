@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+void scan(int arr[], int size, int head, int direction) {
+    int seek_sequence[100], index = 0, distance, seek_count = 0;
+    int start = (direction == 1) ? head : 0;
+    int end = (direction == 1) ? size : head;
+
+    for (int i = start; i < end; i++) {
+        if (arr[i] >= head) {
+            seek_sequence[index++] = arr[i];
+            distance = arr[i] - head;
+            seek_count += distance;
+            head = arr[i];
+        }
+    }
+    for (int i = end - 1; i >= start; i--) {
+        if (arr[i] < head) {
+            seek_sequence[index++] = arr[i];
+            distance = head - arr[i];
+            seek_count += distance;
+            head = arr[i];
+        }
+    }
+    printf("Total seek time: %d\n", seek_count);
+}
+
+int main() {
+    int arr[] = { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90 };
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int head = 50, direction = 1; // 1 for right, 0 for left
+    scan(arr, size, head, direction);
+    return 0;
+}
